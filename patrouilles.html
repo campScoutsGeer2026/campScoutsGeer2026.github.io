@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les patrouilles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      position: relative;
+      height: 100vh; min-height: 360px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .page-hero-bg-fallback {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #1a1208 0%, #2c1f0a 40%, #0d0b08 100%);
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('/assets/images/highlands_patrouilles.png');
+      background-size: cover; background-position: center;
+    }
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,4,0.9) 0%, rgba(10,8,4,0.3) 60%, rgba(10,8,4,0.4) 100%);
+    }
+    .page-hero-content {
+      position: relative; z-index: 10;
+      width: 100%; padding: 3rem; padding-top: 8rem;
+    }
+    .page-hero-content .page-tag { display: block; margin-bottom: 0.75rem; }
+    .page-hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900; color: var(--cream); line-height: 1; margin-bottom: 0.75rem;
+    }
+    .page-hero-content p {
+      font-size: 1.1rem; font-style: italic; font-weight: 300;
+      color: rgba(245,240,232,0.65); letter-spacing: 0.08em;
+    }
+
+    /* ── PATROL SECTION ── */
+    .patrol-section {
+      padding: 6rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      position: relative;
+      overflow: hidden;
+    }
+    .patrol-section:nth-child(odd)  { background: var(--dark2); }
+    .patrol-section:nth-child(even) { background: var(--dark); }
+    .patrol-section:last-of-type { border-bottom: none; }
+
+    /* Numéro décoratif en arrière-plan */
+    .patrol-section::before {
+      content: attr(data-number);
+      position: absolute;
+      right: 3rem; top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 12rem; font-weight: 900;
+      color: rgba(201,168,76,0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── PATROL HEADER ── */
+    .patrol-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .patrol-header .page-tag { display: block; margin-bottom: 0.75rem; }
+    .patrol-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .patrol-header .clan-name {
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .patrol-header-rule {
+      width: 45px; height: 1px;
+      background: var(--gold);
+      margin: 1.25rem auto 0;
+    }
+
+    /* ── CLAN LAYOUT : kilt | texte | blason ── */
+    .clan-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    /* Images latérales */
+    .clan-img-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .clan-img-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: block;
+    }
+    .clan-img-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--dark3);
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+    .clan-img-placeholder svg {
+      width: 28px; height: 28px;
+      stroke: rgba(201,168,76,0.3);
+      fill: none; stroke-width: 1;
+    }
+    .clan-img-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Texte central */
+    .clan-text p {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 1.1rem;
+    }
+    .clan-text p:last-child { margin-bottom: 0; }
+    .clan-text strong { color: var(--cream); font-weight: 600; }
+
+    .clan-details {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .clan-detail-item {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .clan-detail-item span:first-child {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+      padding-top: 0.15rem;
+      min-width: 60px;
+    }
+
+    /* ── PLACEHOLDER PATROL ── */
+    .patrol-placeholder {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--muted);
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .clan-layout {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+      .clan-text { grid-column: 1 / -1; order: -1; }
+      .clan-img-wrap:first-child { order: 0; }
+      .clan-img-wrap:last-child  { order: 1; }
+      .patrol-section::before { display: none; }
+    }
+    @media (max-width: 600px) {
+      .clan-layout { grid-template-columns: 1fr; }
+      .clan-img-placeholder { aspect-ratio: 2/1; }
+      .page-hero-content { padding: 6rem 1.5rem 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" class="opaque">
+    <a class="nav-logo" href="/">
+      <img src="assets/images/logo_scout.png" alt="Logo Staff Scouts" />
+      <span>Staff Scouts</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/patrouilles">Les patrouilles</a></li>
+      <li><a href="/infos">Infos pratiques</a></li>
+      <li><a href="/activites">Activités &amp; Récompenses</a></li>
+      <li><a href="/promesse">Promesse, Quali &amp; Totem</a></li>
+      <li><a href="/avant">Avant le camp</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" onclick="closeMenu()">Accueil</a>
+    <a href="/patrouilles" onclick="closeMenu()">Les patrouilles</a>
+    <a href="/infos" onclick="closeMenu()">Infos pratiques</a>
+    <a href="/activites" onclick="closeMenu()">Activités &amp; Récompenses</a>
+    <a href="/promesse" onclick="closeMenu()">Promesse, Quali &amp; Totem</a>
+    <a href="/avant" onclick="closeMenu()">Avant le camp</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="page-hero">
+    <div class="page-hero-bg-fallback"></div>
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Les patrouilles</h1>
+      <p>Cinq clans. Une seule victoire.</p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       1. SANGLIERS
+  ════════════════════════════════ -->
+  <div class="patrol-section" data-number="1">
+    <div class="container-wide">
+
+      <div class="patrol-header reveal">
+        <h2>Les Sangliers</h2>
+        <p class="clan-name">Clan MacGregor</p>
+        <div class="patrol-header-rule"></div>
+      </div>
+
+      <div class="clan-layout">
+
+        <!-- Kilt (gauche) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/kilts/Clan_MacGregor.jpg" alt="Kilt MacGregor" />
+          <span class="clan-img-label">Kilt MacGregor</span>
+        </div>
+
+        <!-- Texte (centre) -->
+        <div class="clan-text reveal">
+          <p>Le Clan MacGregor est un clan écossais issu des Highlands.  On pense que le clan date du lX ème siècle. Ils auraient combattu bravement durant la première guerre d'indépendance de l'Ecosse.  Et  c'est après cette guerre que le clan a connu un grand revers, car le Roi d'Ecosse a donné au clan Campbell une partie de leur terre et c'est depuis ce temps que les deux clans sont rivaux.  Ils ont ensuite été dépossédé de toutes leurs terres. Ils devinrent ensuite des hors-la-loi,  ce qui fit du braconnage  leur spécialité. Et c'est de cette période que nous vient un des membres les plus célèbres de la famille, qui fut un célèbre hors-la-loi, Robert Roy MacGregor.</p>
+          <p>Les MacGregor furent donc persécutés par le Roi et ses hommes durant plusieurs siècles au point même qu'ils furent bannis du Royaume en 1606 avant d'être rétablis en 1774.</p>
+          <p>Le clan dit descendre du troisième fils de Kenneth MacAlpin, le premier roi d'Ecosse.</p>
+
+          <div class="clan-details">
+            <div class="clan-detail-item">
+              <span>Devise</span>
+              <span>« 'S Rioghal Mo Dhream », que l'on peut traduire par « Royale est ma Race ».</span>
+            </div>
+            <div class="clan-detail-item">
+              <span>Badge</span>
+              <span>Une tête de lion effacée portant une couronne antique à cinq pointes.</span>
+            </div>
+            <div class="clan-detail-item">
+              <span>Kilt</span>
+              <span>Rouge, vert et blanc.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blason (droite) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/blasons/Clan_Gregor.svg.png" alt="Blason MacGregor" />
+          <span class="clan-img-label">Blason MacGregor</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       2. RENARDS
+  ════════════════════════════════ -->
+  <div class="patrol-section" data-number="2">
+    <div class="container-wide">
+
+      <div class="patrol-header reveal">
+        <h2>Les Renards</h2>
+        <p class="clan-name">Clan MacDonald</p>
+        <div class="patrol-header-rule"></div>
+      </div>
+
+      <div class="clan-layout">
+
+        <!-- Kilt (gauche) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/kilts/MacDonald.png" alt="Kilt MacDonald" />
+          <span class="clan-img-label">Kilt MacDonald</span>
+        </div>
+
+        <div class="clan-text reveal">
+          <p>Le clan MacDonald ou Donald est l'un des plus anciens, l'un des plus grands et probablement le plus célèbre de tous les clans écossais des Highlands. L'histoire celtique du clan remonte au-delà du ive siècle aux grands clans de l'île connue de nos jours sous le nom de Irlande. Bien qu'ayant une ascendance irlandaise, les MacDonald ont aussi une ascendance Norvégienne-Gaëlique</p>
+          <p>Les MacDonald participèrent à de nombreuses guerres à commencer par la guerre écosso-norvégienne où le Clan MacDonald a soutenu les troupes du Roi Norvégien Haakon. Ils ont ensuite combattu aux côtés de Robert de Bruce durant la guerre d'indépendance de l'Ecosse.</p>
+          <p>En tant que Seigneur des Iles, le clan MacDonald eut a défendre son titre contre les clans MacLean, MacLeod et MacKinnon qui s'étaient alliés contre lui</p>
+          
+          <div class="clan-details">
+            <div class="clan-detail-item">
+              <span>Devise</span>
+              <span>Per mare per terras qui signifie Par la mer pour la terre.</span>
+            </div>
+            <div class="clan-detail-item">
+              <span>Badge</span>
+              <span>Une main en armure tenant une croix sur la couronne.</span>
+            </div>
+            <div class="clan-detail-item">
+              <span>Kilt</span>
+              <span>Rouge avec des carrés vert et des lignes vertes.</span>
+            </div>
+          </div>
+        
+        </div>
+
+
+        <!-- Blason (droite) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/blasons/Clan_Macdonald.svg.png" alt="Blason MacDonald" />
+          <span class="clan-img-label">Blason MacDonald</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       3. ÉPERVIERS
+  ════════════════════════════════ -->
+  <div class="patrol-section" data-number="3">
+    <div class="container-wide">
+
+      <div class="patrol-header reveal">
+        <h2>Les Éperviers</h2>
+        <p class="clan-name">Clan MacLeod</p>
+        <div class="patrol-header-rule"></div>
+      </div>
+
+      <div class="clan-layout">
+        
+        
+        <!-- Kilt (gauche) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/kilts/MacLeod.png" alt="Kilt MacLeod" />
+          <span class="clan-img-label">Kilt MacLeod</span>
+        </div>
+
+        <div class="clan-text reveal">
+          <p>Le clan MacLeod tire son nom de Leod, fils cadet d'Olaf le Noir, l'un des derniers rois norrois des Hébrides au XIIIe siècle. En héritant des îles de Lewis, Harris et de plusieurs territoires sur Skye, Leod fonda l'un des clans les plus puissants des Highlands. Le château de Dunvegan, forteresse du clan depuis plus de 800 ans, est à ce jour le plus ancien château habité en continu d'Écosse.</p>
+          <p>Les MacLeod combattirent à la bataille de Bannockburn en 1314 aux côtés de Robert the Bruce, puis furent impliqués dans de longues et féroces guerres de clans, principalement contre le clan MacDonald. Malgré ce climat de violence, le clan resta un grand mécène des arts : la musique, la poésie et la cornemuse y étaient vivement encouragées, et l'école de pipers des MacCrimmon est leur héritage culturel le plus durable.</p>
+          <div class="clan-details">
+              <div class="clan-detail-item">
+                <span>Devise</span>
+                <span>"Hold Fast", qui signifie "Tenez bon".</span>
+              </div>
+              <div class="clan-detail-item">
+                <span>Badge</span>
+                <span>Un taureau dressé.</span>
+              </div>
+              <div class="clan-detail-item">
+                <span>Kilt</span>
+                <span>Jaune avec des carreaux noirs et des lignes rouges</span>
+              </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Blason (droite) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/blasons/Clan_Macleod.svg.png" alt="Blason MacLeod" />
+          <span class="clan-img-label">Blason MacLeod</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       4. CASTORS
+  ════════════════════════════════ -->
+  <div class="patrol-section" data-number="4">
+    <div class="container-wide">
+
+      <div class="patrol-header reveal">
+        <h2>Les Castors</h2>
+        <p class="clan-name">Clan MacKenzie</p>
+        <div class="patrol-header-rule"></div>
+      </div>
+
+      <div class="clan-layout">
+        
+        
+        <!-- Kilt (gauche) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/kilts/Mackenzie.png" alt="Kilt MacKenzie" />
+          <span class="clan-img-label">Kilt MacKenzie</span>
+        </div>
+
+        <div class="clan-text reveal">
+          <p>Le clan MacKenzie, dont le nom vient du gaélique MacCoinnich signifiant « Fils de Kenneth », est étroitement lié au Ross-shire et à la région de Kintail. Les MacKenzie soutinrent Robert the Bruce lors des guerres d'indépendance, lui offrant refuge au château d'Eilean Donan en 1307. Ce choix courageux leur valut faveur royale et prospérité.</p>
+          <p>Aux XVe et XVIe siècles, le clan connut une ascension fulgurante, s'emparant des terres des MacDonald et des MacLeod de Lewis. Au XVIIe siècle, leur chef fut élevé au titre de comte de Seaforth, et les MacKenzie devinrent à cette époque le clan possédant la plus grande étendue de terres en Écosse, du Ross-shire jusqu'aux Hébrides. Leur principal ennemi historique fut le clan MacDonald, avec lequel ils entretinrent de nombreuses guerres.</p>
+          <p>Toutefois, leur loyauté envers la dynastie Stuart lors des soulèvements jacobites de 1715 et 1745 entraîna la perte d'une grande partie de leur influence politique.</p>
+          <div class="clan-details">
+              <div class="clan-detail-item">
+                <span>Devise</span>
+                <span>« Lucea non ura », que l'on peut traduire par « Je brille mais je ne brûle pas ».</span>
+              </div>
+              <div class="clan-detail-item">
+                <span>Badge</span>
+                <span>Une montagne en flammes.</span>
+              </div>
+              <div class="clan-detail-item">
+                <span>Kilt</span>
+                <span>Vert foncé et bleu marine avec des rayures rouges et blanches</span>
+              </div>
+            </div>
+        </div>
+
+
+        <!-- Blason (droite) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/blasons/Clan_Mackenzie.svg.png" alt="Blason MacKenzie" />
+          <span class="clan-img-label">Blason MacKenzie</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       5. AIGLES
+  ════════════════════════════════ -->
+  <div class="patrol-section" data-number="5">
+    <div class="container-wide">
+
+      <div class="patrol-header reveal">
+        <h2>Les Aigles</h2>
+        <p class="clan-name">Clan Fraser</p>
+        <div class="patrol-header-rule"></div>
+      </div>
+
+      <div class="clan-layout">
+        
+        
+        <!-- Kilt (gauche) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/kilts/Clan_Fraser_of_Lovat.jpg" alt="Kilt Fraser" />
+          <span class="clan-img-label">Kilt Fraser</span>
+        </div>
+
+
+        <div class="clan-text reveal">
+          <p>Le clan Fraser de Lovat est la branche Highland des Fraser, dont les origines remontent à des chevaliers normands venus d'Anjou au XIe siècle.</p>
+          <p>Le château de Dounie, plus tard remplacé par Beaufort Castle, est le siège principal du clan. Les Fraser de Lovat furent parmi les plus ardents partisans de la cause jacobite.</p>
+          <p>L'histoire du clan culmine avec la bataille de Culloden (1746), où ils subirent de lourdes pertes, et l'exécution de leur chef, Simon Fraser, décapité pour haute trahison en 1747 après avoir joué un double jeu diplomatique complexe. </p>
+          <div class="clan-details">
+              <div class="clan-detail-item">
+                <span>Devise</span>
+                <span>« Je suis prest », qui signifie (sans grande surprise) « Je suis prêt ».</span>
+              </div>
+              <div class="clan-detail-item">
+                <span>Badge</span>
+                <span>Une tête de cerf.</span>
+              </div>
+              <div class="clan-detail-item">
+                <span>Kilt</span>
+                <span>Rouge vif avec des rayures marines et vertes et des liserés blancs.</span>
+              </div>
+            </div>
+        </div>
+
+
+        <!-- Blason (droite) -->
+        <div class="clan-img-wrap reveal">
+          <img src="/assets/images/blasons/Clan_Fraser_of_lovat.svg.png" alt="Blason Fraser" />
+          <span class="clan-img-label">Blason Fraser</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <span>Le staff</span>
+    <span>Camp Scouts 2026</span>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

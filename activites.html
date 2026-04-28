@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activités & Récompenses — Le Geer Express</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      position: relative;
+      height: 100vh; min-height: 360px;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .page-hero-bg-fallback {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #1a1208 0%, #2c1f0a 40%, #0d0b08 100%);
+    }
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('/assets/images/highland_actis.jpg');
+      background-size: cover; background-position: center;
+    }
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,4,0.9) 0%, rgba(10,8,4,0.3) 60%, rgba(10,8,4,0.4) 100%);
+    }
+    .page-hero-content {
+      position: relative; z-index: 10;
+      width: 100%; padding: 3rem; padding-top: 8rem;
+    }
+    .page-hero-content .page-tag { display: block; margin-bottom: 0.75rem; }
+    .page-hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900; color: var(--cream); line-height: 1; margin-bottom: 0.75rem;
+    }
+    .page-hero-content p {
+      font-size: 1.1rem; font-style: italic; font-weight: 300;
+      color: rgba(245,240,232,0.65); letter-spacing: 0.08em;
+    }
+
+    /* ── SECTIONS ── */
+    .act-section {
+      padding: 5rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .act-section:nth-child(odd)  { background: var(--dark2); }
+    .act-section:nth-child(even) { background: var(--dark); }
+    .act-section:last-of-type { border-bottom: none; }
+
+    .act-header {
+      display: flex; align-items: center; gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .act-icon {
+      width: 60px; height: 60px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .act-icon svg {
+      width: 28px; height: 28px;
+      stroke: var(--gold); fill: none;
+      stroke-width: 1.3; stroke-linecap: round;
+    }
+    .act-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700; color: var(--cream); line-height: 1;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      display: flex; gap: 1.5rem;
+      padding: 0.6rem 0 0.6rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -2rem; top: 50%;
+      transform: translateY(-50%);
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .timeline-time {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--gold); white-space: nowrap;
+      min-width: 60px;
+    }
+    .timeline-label {
+      font-size: 0.95rem; font-weight: 300;
+      line-height: 1.5; color: var(--text);
+    }
+    .timeline-label strong { color: var(--cream); font-weight: 600; }
+    .timeline-note {
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      border-left: 2px solid var(--gold);
+      background: rgba(201,168,76,0.04);
+      font-size: 0.9rem; font-weight: 300;
+      font-style: italic; color: var(--muted); line-height: 1.7;
+    }
+
+    /* ── ACTIVITY CARDS ── */
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    .activity-card {
+      padding: 1.75rem;
+      border: 1px solid rgba(201,168,76,0.18);
+      background: rgba(201,168,76,0.02);
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .activity-card:hover {
+      border-color: rgba(201,168,76,0.4);
+      background: rgba(201,168,76,0.05);
+    }
+    .activity-card-tag {
+      font-size: 0.6rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      display: block; margin-bottom: 0.6rem;
+    }
+    .activity-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: var(--cream); margin-bottom: 0.75rem;
+    }
+    .activity-card p {
+      font-size: 0.95rem; font-weight: 300;
+      line-height: 1.8; color: var(--text);
+    }
+    .activity-card p strong { color: var(--cream); font-weight: 600; }
+
+    /* ── PRIX ── */
+    .prix-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .prix-card {
+      padding: 1.75rem;
+      border: 1px solid rgba(201,168,76,0.18);
+      background: rgba(201,168,76,0.02);
+      transition: border-color 0.25s, background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .prix-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .prix-card:hover { border-color: rgba(201,168,76,0.4); background: rgba(201,168,76,0.05); }
+    .prix-card:hover::after { opacity: 1; }
+    .prix-card-medal {
+      font-size: 1.8rem; margin-bottom: 0.75rem; display: block;
+    }
+    .prix-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--cream); margin-bottom: 0.75rem;
+    }
+    .prix-card p {
+      font-size: 0.9rem; font-weight: 300;
+      line-height: 1.75; color: var(--text);
+    }
+    .prix-card p strong { color: var(--cream); font-weight: 600; }
+
+    @media (max-width: 860px) {
+      .page-hero-content { padding: 6rem 1.5rem 2rem; }
+      .activity-grid { grid-template-columns: 1fr; }
+      .prix-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .prix-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" class="opaque">
+    <a class="nav-logo" href="/">
+      <img src="assets/images/logo_scout.png" alt="Logo Staff Scouts" />
+      <span>Staff Scouts</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/patrouilles">Les patrouilles</a></li>
+      <li><a href="/infos">Infos pratiques</a></li>
+      <li><a href="/activites">Activités &amp; Récompenses</a></li>
+      <li><a href="/promesse">Promesse, Quali &amp; Totem</a></li>
+      <li><a href="/avant">Avant le camp</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" onclick="closeMenu()">Accueil</a>
+    <a href="/patrouilles" onclick="closeMenu()">Les patrouilles</a>
+    <a href="/infos" onclick="closeMenu()">Infos pratiques</a>
+    <a href="/activites" onclick="closeMenu()">Activités &amp; Récompenses</a>
+    <a href="/promesse" onclick="closeMenu()">Promesse, Quali &amp; Totem</a>
+    <a href="/avant" onclick="closeMenu()">Avant le camp</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="page-hero">
+    <div class="page-hero-bg-fallback"></div>
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Activités &amp; Récompenses</h1>
+      <p>Découvrez les activités qui rythmeront le camp !</p>
+    </div>
+  </div>
+
+  <!-- ── HORAIRE TYPE ── -->
+  <div class="act-section">
+    <div class="container">
+      <div class="act-header reveal">
+        <div class="act-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h2>L'horaire type d'une journée</h2>
+      </div>
+
+      <div class="timeline reveal">
+        <div class="timeline-item"><span class="timeline-time">7h30</span><span class="timeline-label">Réveil</span></div>
+        <div class="timeline-item"><span class="timeline-time">7h32</span><span class="timeline-label">Rassemblement en tenue de sport</span></div>
+        <div class="timeline-item"><span class="timeline-time">7h33</span><span class="timeline-label">Gymnastique matinale</span></div>
+        <div class="timeline-item"><span class="timeline-time">8h15</span><span class="timeline-label">Déjeuner — nettoyage du coin de patrouille — services</span></div>
+        <div class="timeline-item"><span class="timeline-time">8h30</span><span class="timeline-label">Grand rassemblement — Inspection uniforme et propreté, levée des drapeaux et programme de la journée</span></div>
+        <div class="timeline-item"><span class="timeline-time">9h30</span><span class="timeline-label">Inspection des coins de patrouilles</span></div>
+        <div class="timeline-item"><span class="timeline-time">10h</span><span class="timeline-label">Jeux ou autres activités</span></div>
+        <div class="timeline-item"><span class="timeline-time">12h</span><span class="timeline-label">Préparation du dîner</span></div>
+        <div class="timeline-item"><span class="timeline-time">13h</span><span class="timeline-label">Temps libre — sieste</span></div>
+        <div class="timeline-item"><span class="timeline-time">14h</span><span class="timeline-label">Jeux ou autres activités</span></div>
+        <div class="timeline-item"><span class="timeline-time">16h</span><span class="timeline-label">Goûter</span></div>
+        <div class="timeline-item"><span class="timeline-time">16h30</span><span class="timeline-label">Suite des activités</span></div>
+        <div class="timeline-item"><span class="timeline-time">18h30</span><span class="timeline-label">Préparation du souper</span></div>
+        <div class="timeline-item"><span class="timeline-time">19h30</span><span class="timeline-label">Vaisselle et services — conseil de patrouille</span></div>
+        <div class="timeline-item"><span class="timeline-time">21h</span><span class="timeline-label">Veillée</span></div>
+        <div class="timeline-item"><span class="timeline-time">22h30</span><span class="timeline-label">Couvre-feu</span></div>
+      </div>
+
+      <p class="timeline-note reveal">Dans la pratique, chaque journée est de facto différente étant donné le nombre d'activités variées à intégrer dans notre programme. Cependant, ceci peut vous donner une bonne idée des habitudes du camp scout.</p>
+    </div>
+  </div>
+
+  <!-- ── LES ACTIVITÉS ── -->
+  <div class="act-section">
+    <div class="container-wide">
+      <div class="act-header reveal">
+        <h2>Les activités</h2>
+      </div>
+
+      <p class="reveal" style="font-size:1.05rem; font-weight:300; line-height:1.9; color:var(--text); margin-bottom:2.5rem;">Pour ceux qui n'ont jamais passé 15 jours de camp, sous tentes, au beau milieu de la nature, vous vous demandez peut-être ce que l'on peut bien faire pendant tout ce temps… Et bien tout simplement tellement de choses que les 15 jours sont à peine suffisants !! Voici donc pour vous une liste non-exhaustive des activités d'un camp scout.</p>
+
+      <div class="activity-grid">
+
+        <div class="activity-card reveal">
+          <h3>Le Précamp</h3>
+          <p>Les chefs, les intendants et 5èmes se mettent à l'ouvrage 1 jour avant pour monter les tentes, visiter les lieux, faire les dernières mises au point… tout cela pour accueillir les autres scouts comme il se doit et commencer un camp exceptionnel !</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>Le Woodcraft</h3>
+          <p>Les premiers jours du camp sont toujours consacrés au woodcraft ; c'est-à-dire aux CONSTRUCTIONS. Chaque patrouille se construira donc un endroit sympa autour de sa tente, en joignant l'utile à l'agréable. Table, bancs, étagères, ...</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>Les J.O.</h3>
+          <p>Les Jeux Olympiques seront une activité incontournable du camp. Les patrouilles s'affronteront sur différentes épreuves sportives, en équipe ou en individuel, avec pour seul objectif de remporter les médailles !</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>Le Hike</h3>
+          <p>À vos boussoles, cartes, chaussures et sacs à dos car voici venu le HIKE. Trois jours et deux nuits pour parcourir et découvrir la région et aller aussi à la rencontre des habitants. Un moment fort qui permettra à la patrouille de faire plus ample connaissance et d'acquérir une certaine responsabilité. (Munissez-vous donc de bonnes chaussures de marche !)</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>Le Concours Cuisine</h3>
+          <p>Une épreuve faite pour les rois du pèle-patates, les dieux du couvert, les pro's de la déco… Montrez-nous de quoi vous êtes capables ! Préparez un festin dont on se régalera jusqu'à plus faim !! N'oubliez pas, évidemment, d'essayer de rester dans le thème… </p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>Les Badges</h3>
+          <p>Chaque scout a, dans son carnet du Bon Scout, les objectifs qui sont fixés pour son badge. Les « épreuves » auront lieu pendant tout le camp pour certaines et d'autres à des moments prévus exprès pour. Pour les première et deuxième années, n'oubliez pas que le Tenderfoot est obligatoire afin de pouvoir passer son totem.</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>Le Jeu de 24h</h3>
+          <p>Comme son nom l'indique, cette activité est un grand jeu qui dure 24 heures. Il se déroule dans les bois avoisinant la plaine. « Et on va vraiment jouer pendant 24h d'affilée ?» Ouiiiiiii ! Enfin, on va tout faire pour en incluant, rassurez-vous, les pauses repas et dodo !</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>La Journée CP</h3>
+          <p>Comme son nom l'indique, cette activité est un grand jeu organisé par les CP. Pendant toute une journée, les CP se mettront dans la peau du Staff tandis que les chefs prendront leur place dans les patrouilles.</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>La Nouba</h3>
+          <p>Le dernier soir du camp c'est la grande fête ! On mange de délicieux mets préparés avec amour par vos chefs et intendants adorés et on s'amuse tous ensemble, rassemblés au- tour d'un énorme feu afin de célébrer la fin du camp et de fêter ceux qui nous quittent cette année !</p>
+        </div>
+
+        <div class="activity-card reveal">
+          <h3>Les Veillées</h3>
+          <p>Pendant le camp, des veillées seront organisées à chaque fois par deux patrouilles. Ce sera l'occasion pour vous de montrer tout ce dont vous êtes capables en faisant vivre à la Troupe des soirées inoubliables. Vous avez le choix du type de veillée (chants, petits jeux, théâtre, jeux de rôles, impro, jeux variés). Tout est possible ! Combinez plusieurs types de veillée, inventez ce que vous voulez...</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LES PRIX ── -->
+  <div class="act-section">
+    <div class="container-wide">
+      <div class="act-header reveal">
+        <h2>Les Prix</h2>
+      </div>
+      <p class="reveal" style="font-size:1.05rem; font-weight:300; line-height:1.9; color:var(--text); margin-bottom:2.5rem;">Lors du dernier grand rassemblement du camp, les résultats sont proclamés et les prix sont distribués aux patrouilles méritantes. Voici ce que chaque prix récompense…</p>
+
+      <div class="prix-grid">
+
+        <div class="prix-card reveal">
+          <h3>Prix Camp</h3>
+          <p>Il récompense la patrouille la plus régulière aux rassemblements, aux repas, aux services, aux inspections et aux couchers. Atteindre une telle régularité demande beaucoup de cohésion au sein de la patrouille et c'est probablement ce qui rend le prix camp le plus difficile à acquérir, mais aussi le mieux coté.</p>
+        </div>
+
+        <div class="prix-card reveal">
+          <h3>Prix Woodcraft</h3>
+          <p>Pour gagner il «suffira» de construire en quatre jours un pilotis solide, esthétique, original, utilitaire, en rapport avec le thème du camp et qui surclasse celui des autres patrouilles. Bien sûr, le faire est plus difficile que le dessiner mais un peu d'imagination et d'adresse permettent beaucoup de choses. Cependant n'oubliez pas que lors de l'inauguration tout doit être propre (sol, tente et abords immédiats, vaisselle, ...) et net (brelages bien terminés et surtout solides, perches droites, ...). De plus, si les table à feu, bancs, chaises, tables, ... sont parfois un atout, il ne faut pas les négliger !</p>
+        </div>
+
+        <div class="prix-card reveal">
+          <h3>Prix Feu</h3>
+          <p>Le staff appréciera la patrouille la plus active, la plus fairplay et la plus vaillante lors du grand jeu de 24h.</p>
+        </div>
+
+        <div class="prix-card reveal">
+          <h3>Prix Veillée</h3>
+          <p>Les veillées sont parfois loin d'être réussies... La patrouille toute entière doit participer ! Pour réussir une veillée, il faut aussi apporter du neuf. Un nouveau jeu, une nouvelle chanson ou un bon sketch rend une veillée différente des autres... </p>
+        </div>
+
+        <div class="prix-card reveal">
+          <h3>Prix Hike</h3>
+          <p>Lors du Hike, le staff demande à la patrouille un rapport propre, soigné et clair c-à-d un rapport qui donne envie de lire. L'endroit où la patrouille compte dormir sera visité par les chefs en fin de journée. Une tenue correcte des lieux et de vous-même sont deux choses non négligeables auxquelles nous ferons grandement attention.</p>
+        </div>
+
+        <div class="prix-card reveal">
+          <h3>Prix Concours Cuisine</h3>
+          <p>Pour coter le concours cuisine, les chefs se limitent à la feuille de cotation : accueil, présentation et tenue, rapport avec le thème du camp, entrée, plat de résistance, dessert. L'esprit du concours cuisine, c'est allier un menu varié et original avec des prix raisonnables.</p>
+        </div>
+
+        <div class="prix-card reveal">
+          <h3>Scout à l'Honneur</h3>
+          <p>Ce prix récompense le Scout qui tout au long du camp, dans des activités diverses, montre ses qualités morales et physiques ou encore qu'il prouve qu'il a fourni un effort pour améliorer ses capacités et ses écarts d'humeur.</p>
+        </div>
+
+        <div class="prix-card reveal">
+          <h3>CP à l'Honneur</h3>
+          <p>Le CP à l'Honneur du camp est le chef de patrouille qui a su tenir son rôle si bien pendant l'année que pendant le camp. Il a su se montrer responsable, tolérant, compréhensif et a pu mener sa patrouille tout en veillant sur elle. Ce prix a un caractère très prestigieux !</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Le staff</span>
+    <span>Camp Scouts 2026</span>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

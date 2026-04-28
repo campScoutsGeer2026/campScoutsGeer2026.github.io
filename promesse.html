@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Promesse, Quali & Totem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+  <style>
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      position: relative;
+      height: 100vh;
+      min-height: 380px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .page-hero-bg-fallback {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #1a1208 0%, #2c1f0a 40%, #0d0b08 100%);
+    }
+
+    .page-hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('/assets/images/highland_promesse.png');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .page-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,4,0.9) 0%, rgba(10,8,4,0.3) 60%, rgba(10,8,4,0.4) 100%);
+    }
+
+    .page-hero-content {
+      position: relative; z-index: 10;
+      width: 100%;
+      padding: 3rem;
+      padding-top: 8rem;
+    }
+
+    .page-hero-content .page-tag { display: block; margin-bottom: 0.75rem; }
+
+    .page-hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-hero-content p {
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(245,240,232,0.65);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── CONTENT ── */
+    .pqt-section {
+      padding: 5rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+
+    .pqt-section:last-of-type { border-bottom: none; }
+
+    .pqt-section:nth-child(odd)  { background: var(--dark2); }
+    .pqt-section:nth-child(even) { background: var(--dark); }
+
+    .pqt-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .pqt-aside {
+      position: sticky;
+      top: 6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .pqt-icon {
+      width: 80px; height: 80px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pqt-icon svg {
+      width: 36px; height: 36px;
+      stroke: var(--gold);
+      fill: none; stroke-width: 1.2;
+      stroke-linecap: round;
+    }
+
+    .pqt-aside h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+
+    .pqt-aside .section-rule {
+      margin: 0 auto;
+    }
+
+    .pqt-body p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .pqt-body p:last-child { margin-bottom: 0; }
+
+    .pqt-body strong { color: var(--cream); font-weight: 600; }
+
+    /* Loi scoute */
+    .scout-law {
+      margin: 2rem 0;
+      padding: 2rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: rgba(201,168,76,0.03);
+    }
+
+    .scout-law li {
+      list-style: none;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .scout-law li:last-child { border-bottom: none; }
+
+    .scout-law li::before {
+      content: '—';
+      color: var(--gold);
+      margin-right: 0.75rem;
+      font-weight: 400;
+    }
+
+    /* Phrase promesse */
+    .promise-quote {
+      margin: 2rem 0 0;
+      padding: 1.75rem 2rem;
+      border-left: 2px solid var(--gold);
+      background: rgba(201,168,76,0.04);
+      font-style: italic;
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--cream);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .page-hero-content { padding: 6rem 1.5rem 2rem; }
+      .pqt-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .pqt-aside { position: static; flex-direction: row; text-align: left; flex-wrap: wrap; }
+      .pqt-aside .section-rule { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar" class="opaque">
+    <a class="nav-logo" href="/">
+      <img src="assets/images/logo_scout.png" alt="Logo Staff Scouts" />
+      <span>Staff Scouts</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Accueil</a></li>
+      <li><a href="/patrouilles">Les patrouilles</a></li>
+      <li><a href="/infos">Infos pratiques</a></li>
+      <li><a href="/activites">Activités &amp; Récompenses</a></li>
+      <li><a href="/promesse">Promesse, Quali &amp; Totem</a></li>
+      <li><a href="/avant">Avant le camp</a></li>
+      <!-- <li><a href="/recap">Récap 2024–2025</a></li> -->
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="/" onclick="closeMenu()">Accueil</a>
+    <a href="/patrouilles" onclick="closeMenu()">Les patrouilles</a>
+    <a href="/infos" onclick="closeMenu()">Infos pratiques</a>
+    <a href="/activites" onclick="closeMenu()">Activités &amp; Récompenses</a>
+    <a href="/promesse" onclick="closeMenu()">Promesse, Quali &amp; Totem</a>
+    <a href="/avant" onclick="closeMenu()">Avant le camp</a>
+    <!-- <a href="/recap" onclick="closeMenu()">Récap 2024–2025</a> -->
+  </div>
+
+  <!-- ── PAGE HERO ── -->
+  <div class="page-hero">
+    <div class="page-hero-bg-fallback"></div>
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <h1>Promesse, Quali &amp; Totem</h1>
+      <p>Les étapes majeures de votre parcours scout !</p>
+    </div>
+  </div>
+
+  <!-- ── LA PROMESSE ── -->
+  <div class="pqt-section">
+    <div class="container">
+      <div class="pqt-grid">
+
+        <div class="pqt-aside reveal">
+          <img src="/assets/images/kilts/Promesse.png" alt="Promesse" />
+          <div>
+            <h2>La Promesse</h2>
+            <div class="section-rule"></div>
+          </div>
+        </div>
+
+        <div class="pqt-body reveal">
+          <p>La promesse est l'acte par lequel chacun (à partir de sa troisième année scoute) exprime son désir de choisir le chemin du Scoutisme pour grandir. Elle représente, avec ton arrivée à la Troupe ou dans le Scoutisme, ton seul véritable engagement dans la vie Scoute. Elle signifie que tu souhaites adhérer pleinement à l'idéal Scout et t'investir à fond dans la vie de la Troupe.</p>
+          <p>C'est le seul événement qui rassemble les Scouts du monde entier, il s'agit d'un engagement au sein du Scoutisme mondial. Tu prends l'engagement, devant ceux que tu rejoins, de vivre librement les valeurs du Scoutisme. Par cet acte, le scout qui se sent prêt et qui a accompli au moins trois ans au sein de la troupe s'engage à suivre la loi scoute.</p>
+          <p>Afin de guider les promettants dans cet acte, nous leur rappelons la charte à laquelle nous sommes tous fidèles. :</p>
+
+          <ul class="scout-law">
+            <li>Le scout fait et mérite confiance.</li>
+            <li>Le scout s'engage là où il vit.</li>
+            <li>Le scout est fait pour servir et aider son prochain.</li>
+            <li>Le scout est l’ami de tous et le frère de tout autre scout.</li>
+            <li>Le scout accueille et respecte les autres.</li>
+            <li>Le scout aime et respecte la nature et le travail des hommes.</li>
+            <li>Le scout ne fait rien à moitié et toujours de son mieux.</li>
+            <li>Le scout sourit et chante même dans les difficultés.</li>
+            <li>Le scout partage, ne gaspille rien et prend soin du bien d'autrui.</li>
+            <li>Le scout est propre dans ses pensées, ses paroles et ses actes.</li>
+          </ul>
+
+          <p>Voici la phrase à réciter pendant la promesse qui se fera au Grand Camp. Elle peut être légèrement modifiée en fonction des croyances du scout et après discussion avec lui.</p>
+
+          <blockquote class="promise-quote">
+            « Sur mon honneur et avec la grâce de Dieu et en m'appuyant sur votre amitié, je m'engage à faire de mon mieux pour remplir mes devoirs de chrétiens et de scout. Que Dieu m'aide à y être fidèle. »
+          </blockquote>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LA TOTÉMISATION ── -->
+  <div class="pqt-section">
+    <div class="container">
+      <div class="pqt-grid">
+
+        <div class="pqt-aside reveal">
+          <img src="/assets/images/kilts/totems-scouts-logo.png" alt="Totem" />
+          <div>
+            <h2>La Totémisation</h2>
+            <div class="section-rule"></div>
+          </div>
+        </div>
+
+        <div class="pqt-body reveal">
+          <p>Un totem est un nom d'animal dont l'allure générale se rapporte à l'aspect physique, au comportement, aux attitudes du scout en question.</p>
+          <p>Depuis presque deux ans, il y a eu des hauts et certainement des bas, mais de réunion en réunion tu t'es habitué à ta patrouille et à notre Troupe. En tout cas, la Troupe va définitivement marquer ton appartenance en te donnant le nom d'un animal qui te ressemblera. Par ses qualités ou ses caractéristiques, ça sera par lui qu'on t'appellera. Le Totem étant un cadeau de nous à toi, tu as toutes les raisons de te réjouir !</p>
+          <p>Le totem est donc un signe d'intégration, une manière de montrer son appartenance à un groupe, en l'occurrence à la Troupe. Il est donné en signe d'accueil, d'acceptation au sein du groupe.</p>
+          <p>Après ce blabla un peu théorique, clairement, la totémisation, c'est quoi ? Marcher 35 km avec des punaises dans les chaussures, puis à midi se faire cuire un lapin vivant pour reprendre des forces pour l'après-midi et enfin vous humilier en vous faisant boire de l'urine de vache ??? Noooon, il ne s'agit rien de tout ça ! Certes, il y aura des épreuves, mais loin de nous l'idée de vous transformer en invalides de guerre ou de vous humilier. La totémisation doit rester pour chaque Scout un des meilleurs souvenirs de sa vie au sein de la Troupe !!! </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LA QUALIFICATION ── -->
+  <div class="pqt-section">
+    <div class="container">
+      <div class="pqt-grid">
+
+        <div class="pqt-aside reveal">
+          <img src="/assets/images/kilts/qualis.png" alt="qualis" />
+          <div>
+            <h2>La Qualification</h2>
+            <div class="section-rule"></div>
+          </div>
+        </div>
+
+        <div class="pqt-body reveal">
+          <p>En ce qui concerne le quali, les scouts qualifiés ainsi que les chefs cherchent les traits de caractère qui correspondent aux scouts de troisième année. Un qualificatif sera alors attribué à chacun afin que le scout sache comment il est perçu dans la Troupe. Le quali vous aide également à vous améliorer. Chaque année, nous nous rassemblons pour discuter des efforts faits par chacun… C'est un suivi d'année en année pour vous encourager à progresser.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Le staff</span>
+    <span>Camp Scouts 2025</span>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
